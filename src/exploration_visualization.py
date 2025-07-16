@@ -1,7 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 import random
-from tensorflow.keras.preprocessing.image import load_img, img_to_array  
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 import seaborn as sns
 from pathlib import Path
@@ -32,6 +32,9 @@ def check_structure(data_dir, sets, labels):
 
 
 def count_images_for_class(data_dir, class_name, splits):
+    """
+    Count total images for a specific class across multiple dataset splits.
+    """
     return sum(
         len(os.listdir(os.path.join(data_dir, split, class_name)))
         for split in splits
