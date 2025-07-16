@@ -1,7 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 import random
-from tensorflow.keras.utils import load_img, img_to_array   # type: ignore
+from tensorflow.keras.preprocessing.image import load_img, img_to_array  
 import numpy as np
 import seaborn as sns
 from pathlib import Path
