@@ -29,10 +29,10 @@ def page_summary_body():
     st.markdown("## 🖼️ Sample Cherry Leaf Images")
 
     healthy_images = glob.glob("inputs/datasets/raw/cherry-leaves/train/healthy/*.JPG")
-    infected_images = glob.glob("inputs/datasets/raw/cherry-leaves/train/diseased/*.JPG")
+    diseased_images = glob.glob("inputs/datasets/raw/cherry-leaves/train/diseased/*.JPG")
 
-    if healthy_images and infected_images:
-        image_paths = [healthy_images[0], infected_images[0]]
+    if healthy_images and diseased_images:
+        image_paths = [healthy_images[0], diseased_images[0]]
         captions = ["✅ Healthy Leaf", "⚠️ Mildew-Infected Leaf"]
 
         col1, col2 = st.columns(2)
@@ -67,13 +67,15 @@ def page_summary_body():
     The dataset used in this project contains **over 4,000 cherry leaf images**, labeled as:
 
     - 🍃 **Healthy**
-    - 🌫️ **Infected (Powdery Mildew)**
+    - 🌫️ **Diseased (Powdery Mildew)**
 
     📥 Source: [Kaggle - Cherry Leaf Dataset](https://www.kaggle.com/codeinstitute/cherry-leaves)
 
     🔍 For this study:
-    - A **balanced subset** of images was used to improve **training speed** and **model stability**
     - The dataset was split into **training**, **validation**, and **test** folders
+    - **Training**: 70% of images
+    - **Validation**: 15% of images
+    - **Test**: 15% of images
     """)
 
     st.divider()
