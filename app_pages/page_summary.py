@@ -90,4 +90,6 @@ def page_summary_body():
 
     # ─── Call to Action ─────────────────────────────────────────────────────────
     st.markdown("### 🚀 Ready to Try It?")
-    st.info("Head over to the [Diagnosis Assistant](?page=diagnosis%20assistant)! page to upload an image and see the AI model in action!")
+    if st.button("👉 Go to Diagnosis Assistant"):
+        st.query_params["page"] = "diagnosis-assistant"
+        st.rerun()
