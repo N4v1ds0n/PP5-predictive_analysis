@@ -61,9 +61,11 @@ For full context, see the original business interview.
 
 Hypothesis 1: Visual Signs of Infection Are Detectable
 
-Hypothesis 2: A CNN Can Reliably Detect Powdery Mildew
+Hypothesis 2: A Sigmoid Activation Is Suitable for Binary Classification
 
-Hypothesis 3: A Sigmoid Activation Is Suitable for Binary Classification
+Hypothesis 3: A CNN Can Reliably Detect Powdery Mildew
+
+Hypothesis 4: The Model Can Generalize Beyond the Training Domain
 
 ### Hypothesis 1: Visual Signs of Infection Are Detectable
 
@@ -230,3 +232,190 @@ history = model.fit(
 )
 ```
 
+## ML Business Case: Powdery Mildew Classifier
+
+
+### Objective
+
+Develop a machine learning model to automatically classify whether a cherry leaf is infected with powdery mildew based on image data provided by the Farmy & Foody company. This is a supervised learning problem, framed as binary image classification.
+
+### Problem Framing
+
+- Type: Supervised Learning
+
+- Task: Binary classification (Healthy vs. Diseased)
+
+- Label Type: Single-label, mutually exclusive
+
+- Input: RGB image of a cherry leaf
+
+- Output:
+
+    - A binary flag indicating infection status
+
+    - A confidence score (probability between 0–1)
+
+### Success Criteria
+
+- Accuracy target: ≥ 87% on the test set
+
+- Inference mode: Real-time / on-demand (no batch inference)
+
+- Deployment target: Mobile/web application for field use by farmers
+
+### Business Rationale
+
+Currently, disease detection relies on manual leaf inspection, where a farmer spends ~30 minutes per tree, sampling and visually inspecting leaves. This process is:
+
+- Time-consuming
+
+- Prone to human error
+
+- Scalable only with increased labor costs
+
+By automating the diagnosis via a mobile app, we can offer:
+
+- Faster diagnosis
+
+- Consistent accuracy
+
+- Reduced labor and inspection costs
+
+- Scalable disease monitoring
+
+### Data Source
+
+- Dataset: Cherry Leaf Disease Dataset on Kaggle
+
+- Provided by: Farmy & Foody
+
+- Image Count: 4,208 cherry leaf images, 2 classes: Healthy and Powdery Mildew Infected, Format: 128x128 RGB JPEG images
+
+
+## Debugging
+
+### Fixed Bugs
+
+| Bug | Fix |
+|---|---|
+|**TypeError: list indices must be integers or slices, not str during CSV Import**|Updated save_cashflow() to detect and handle both single entries and lists|
+
+### Unfixed Bugs
+
+None known at time of submission.
+
+---
+## Deployment
+
+The project is hosted on GitHub and deployed via Heroku.
+
+### Create an App on Heroku
+
+To deploy this project on Heroku, follow these steps:
+
+- Ensure a requirements.txt file is present in the GitHub repository to specify all Python dependencies.
+
+- Include a runtime.txt file to define the Python version (e.g., python-3.11.8) supported by the Heroku-20 stack.
+
+- Push the latest code changes to GitHub.
+
+- Log in to your Heroku dashboard and create a new app.
+
+- Click Create New App, assign a unique name, and choose a region.
+
+- Under the Settings tab, add the heroku/python buildpack.
+
+- In the Deploy tab:
+
+    - Choose GitHub as the deployment method.
+
+    - Connect to your GitHub account and select the repository for this project.
+
+- Select the branch to deploy, then click Deploy Branch.
+
+- Optionally, enable Automatic Deploys for continuous deployment or use Manual Deploy.
+
+- Monitor the build logs as dependencies are installed and the app is built.
+
+- Once deployed, the app will be available at a URL similar to: https://your-app-name.herokuapp.com/
+
+- If the slug size exceeds the limit, add non-essential files to a .slugignore file to reduce build size. This might include packages you are only using in your notebooks, you can remove them from your requirements file and install them from a notebook cell.
+
+## Forking the Repository
+
+If you want to fork this project repository you are very welcome to do so:
+
+- Go to the GitHub Repository.
+
+- Log into your GitHub account.
+
+- Click the Fork button at the top-right corner.
+
+- Select the destination (e.g., your own GitHub account).
+
+- You now have a personal copy of the repository to modify without affecting the original.
+
+## Cloning the Repository Locally
+
+If you want to work on your fork locally, you can clone the project to your machine:
+
+- Navigate to the GitHub Repository.
+
+- Click the Code button and choose one of the cloning methods (HTTPS, GitHub CLI, ZIP).
+
+- To clone via HTTPS:
+
+    - Copy the URL under Clone with HTTPS
+
+    - Open a terminal or Git Bash
+
+    - Navigate to the desired directory
+
+    - Run:
+
+    git clone https://github.com/*yourhandle*/PP5-predictive_analysis.git
+
+- Press Enter and wait for the process to complete.
+
+- For additional help, refer to the GitHub cloning guide.
+
+---
+
+## Technologies used
+
+### Platforms
+- [Heroku](https://en.wikipedia.org/wiki/Heroku) Deployment
+- [Jupiter Notebook](https://jupyter.org/) Data acquisition, exploration and training area
+- [Kaggle](https://www.kaggle.com/) Data source
+- [GitHub](https://github.com/): Repo storage
+- [VSCode](https://code.visualstudio.com/) Local IDE
+
+
+### Languages
+- [Python](https://www.python.org/)
+- [Markdown](https://en.wikipedia.org/wiki/Markdown)
+  
+### Main Data Analysis and Machine Learning Libraries
+<pre>
+numpy==1.26.1
+pandas==2.1.1
+matplotlib==3.8.0
+seaborn==0.13.2
+plotly==5.17.0
+Pillow==10.0.1
+streamlit==1.40.2
+joblib==1.4.2
+tensorflow-cpu==2.16.1
+scikit-learn==...
+</pre>
+
+## Credits
+
+
+
+
+### Acknowledgements
+
+Thanks to [Code Institute](https://codeinstitute.net/global/), especially Kay Welfare and my mentor Mo Shami. 
+
+### Deployed version at [Mildew Detector](https://detect-mildew-1e5e3ef17076.herokuapp.com/)
