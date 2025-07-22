@@ -140,7 +140,7 @@ def plot_training_curves(history,
     Plots loss and accuracy curves from model training history.
 
     Parameters:
-        history (keras.callbacks.History or dict): History object or dict
+        history (tensorflow.keras.callbacks.History or dict): History object or dict
         with 'loss', 'val_loss', etc. output_dir (str, optional): Path to
         save figures. If None and save_figures=True, saves to current
         directory.
