@@ -28,8 +28,8 @@ def page_summary_body():
     # ─── Sample Images ──────────────────────────────────────────────────────────
     st.markdown("## 🖼️ Sample Cherry Leaf Images")
 
-    healthy_images = glob.glob("inputs/datasets/raw/cherry-leaves/train/healthy/*.JPG")
-    diseased_images = glob.glob("inputs/datasets/raw/cherry-leaves/train/diseased/*.JPG")
+    healthy_images = glob.glob("inputs/datasets/raw/cherry-leaves/validation/healthy/*.JPG")
+    diseased_images = glob.glob("inputs/datasets/raw/cherry-leaves/validation/diseased/*.JPG")
 
     if healthy_images and diseased_images:
         image_paths = [healthy_images[0], diseased_images[0]]
@@ -47,7 +47,7 @@ def page_summary_body():
 
     st.divider()
 
-    # ─── Business Requirements ───────────────────────────────────────────────────
+    # ─── Business Requirements ───────────────────────────────────────────────
     st.markdown("## 📊 Business Requirements")
 
     st.markdown("""

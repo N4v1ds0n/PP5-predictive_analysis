@@ -21,12 +21,12 @@ interface.
 ## Table of Contents
 1. [Dataset Description](#dataset-description)
 2. [Business Requirements](#business-requirements)
-3. [Hypothesis and validation](#hypothesis-and-validation)
+3. [Hypothesis and validation](#hypotheses-and-validation)
 4. [Model Architecture](#model-architecture)
-6. [Implementation of the Business Requirements](#the-rationale-to-map-the-business-requirements-to-the-data-visualizations-and-ml-tasks)
-7. [ML Business case](#ml-business-case)
-8. [Dashboard design](#dashboard-design-streamlit-app-user-interface)
-9. [CRISP DM Process](#the-process-of-cross-industry-standard-process-for-data-mining)
+5. [Implementation of the Business Requirements](#the-rationale-to-map-the-business-requirements-to-the-data-visualizations-and-ml-tasks)
+6. [ML Business case](#ml-business-case)
+7. [Dashboard design](#dashboard-design-streamlit-app-user-interface)
+8. [CRISP DM](#crisp-dm-approach)
 9. [Testing](#testing)
 10. [Bugs](#bugs)
 11. [Deployment](#deployment)
@@ -48,27 +48,26 @@ The company currently relies on a manual inspection process: an employee examine
 
 The client aims to automate this process using an AI-powered visual inspection system that can instantly identify whether a leaf is healthy or infected, thereby significantly reducing labor time and enabling early intervention to protect crop quality.
 
-For full context, see the original business interview.
-✅ Summary of Business Requirements:
+Summary of Business Requirements:
 
-    Visually differentiate healthy cherry leaves from those infected with powdery mildew.
+- Visually differentiate healthy cherry leaves from those infected with powdery mildew.
 
-    Automatically predict the health status of a leaf based on an image.
+- Automatically predict the health status of a leaf based on an image.
 
-    Provide interpretable prediction reports for the examined leaves.
+- Provide interpretable prediction reports for the examined leaves.
 
 
 ## Hypotheses and Validation
 
-Hypothesis 1: Visual Signs of Infection Are Detectable
+Hypothesis 1: Visual signs of mildew infection are detectable
 
-Hypothesis 2: A Sigmoid Activation Is Suitable for Binary Classification
+Hypothesis 2: A softmax output neuron is the better choice despite of binary dataset
 
-Hypothesis 3: A CNN Can Reliably Detect Powdery Mildew
+Hypothesis 3: A CNN can reliably detect powdery mildew
 
-Hypothesis 4: The Model Can Generalize Beyond the Training Domain
+Hypothesis 4: The model might have difficulties to Generalize Beyond the Training Domain
 
-### Hypothesis 1: Visual Signs of Infection Are Detectable
+### Hypothesis 1: Visual signs of infection are detectable
 
 Statement: Powdery mildew creates distinct visual patterns—such as white, powdery spots—that can be reliably captured in leaf imagery.
 
@@ -76,29 +75,32 @@ Rationale: Since the disease alters the leaf's surface texture and coloration, i
 
 Validation:
 
-    Manual inspection of the dataset confirmed consistent and distinct mildew markings.
+- Manual inspection of the dataset confirmed consistent and distinct mildew markings.
 
-    Exploratory Data Analysis (EDA) showed clustering of image features in principal component space, suggesting separability.
+- Create averaged images for each class and a standard deviation image -> differences detectable
 
-    Sample predictions were cross-checked with labeled images to confirm visual cues were being leveraged.
+- Exploratory Data Analysis (EDA) showed clustering of image features in principal component space, suggesting separability.
+  - PCA, t-SNE and UMAP showed increasingly distinguishable clusters, which suggests good class seperability.
 
 
-### Hypothesis 3: A Sigmoid Activation Is Suitable for Binary Classification
+### Hypothesis 2: A softmax output neuron is the better choice despite of binary dataset
 
-Statement: Using a sigmoid activation function in the output layer is appropriate for this binary classification task (healthy vs. infected).
+Statement: Although for a binary classification problem the single output neuron setup with a sigmoid function returning 1 or 0 is the default approach. However there are indications, that especially for gradient based optimization a categorical approach with two softmax Neurons might be better. This is because categorical loss can sometimes offer better learning curves due to gradient stability.
 
-Rationale: A sigmoid function outputs a probability between 0 and 1, making it ideal for binary outcomes. Unlike softmax, which is better suited for multi-class problems, sigmoid offers direct interpretability for two-class tasks.
+Rationale: A sigmoid function outputs a probability between 0 and 1, making it ideal for binary outcomes. But softmax, which is usually better suited for multi-class problems, might lead to more accurate results due to better gradient stability.
 
 Validation:
 
-    Comparison of sigmoid vs. softmax output layers showed sigmoid resulted in simpler interpretation without sacrificing performance.
+    Comparison of sigmoid vs. softmax output layers by running a ffold for each setup to compare accuracy and time consumption
 
-    The model produced well-calibrated probability scores.
+    The models produced well-calibrated probability scores.
 
-    No class imbalance issues requiring threshold tuning were observed (due to balanced dataset).
+Conclusion:
+The kfold duel showed that the softmax approach is not only reaching a higher accuracy, but also training faster on average, making it the objectively better choice for our model.
+    
 
 
-### Hypothesis 2: A CNN Can Reliably Detect Powdery Mildew
+### Hypothesis 3: A CNN can reliably detect powdery mildew
 
 Statement: A Convolutional Neural Network (CNN) can learn the relevant spatial patterns in the leaf images to distinguish between healthy and infected samples with high accuracy.
 
@@ -106,36 +108,38 @@ Rationale: CNNs are well-suited for image classification tasks as they extract h
 
 Validation:
 
-    The model achieved strong performance metrics (e.g., accuracy, precision, recall) on the validation and test sets.
+- The model achieved strong performance metrics (e.g., accuracy, precision, recall) on the validation and test sets.
 
-    Learning curves showed convergence without significant overfitting.
+- Learning curves showed convergence without significant overfitting.
 
-    Grad-CAM heatmaps and model interpretability tools indicated focus on mildew regions.
+- Confusion matrices, classification report, ROC curce and AUC score showed excelling results the AUC score was 1 which is a perfect score
+
+Conclusion:
+The model can make very reliable predictions on the test data and distinguish between healthy and mildew-infected leaves.
 
 
+### Hypothesis 4: The model might have difficulties to Generalize Beyond the Training Domain
 
-### Hypothesis 4: The Model Can Generalize Beyond the Training Domain
+Statement: A model trained on clean, uniformly staged leaf images might have problems to effectively extraploate to to real-world conditions where leaves appear in varied lighting, angles, and backgrounds. If the leaves are not photographed under the same conditions the model might be misclassifying.
 
-Statement: A model trained on clean, uniformly staged leaf images can generalize effectively to real-world conditions where leaves appear in varied lighting, angles, and backgrounds.
-
-Rationale: For the model to be practically useful in the field, it must handle natural variability — including non-isolated leaves, overlapping foliage, crumpling, varying lighting conditions, or inconsistent focus — none of which are present in the curated training dataset.
+Rationale: For the model to be practically useful in the field, it should handle natural variability — including non-isolated leaves, overlapping foliage, crumpling, varying lighting conditions, or inconsistent focus — none of which are present in the curated training dataset. Otherwise the model will still be useful, but much more difficult to apply.
 
 Validation:
 
-    Real-world test images (taken in natural farm environments) were used to evaluate model robustness.
+    A set of real-world test images (generated by AI, but realistic) were used to evaluate model robustness.
 
     Performance on these out-of-distribution (OOD) images was significantly lower, revealing overreliance on artificial features like consistent background, brightness, and contrast.
 
     Attempts to compensate using Test-Time Augmentation (TTA) and extensive data augmentation yielded only marginal improvements, underscoring the importance of representative training data.
 
 Conclusion:
-This hypothesis did not hold under current conditions. The model suffers from poor extrapolation due to the highly uniform dataset. For deployment-ready performance, substantial improvements must be made through:
+The model suffers from poor extrapolation due to the highly uniform dataset. For field-ready performance, substantial improvements should be made through:
 
-    Dataset diversification (adding naturally captured leaf images),
+- Dataset diversification (adding naturally captured leaf images),
 
-    Domain adaptation techniques, or
+- Domain adaptation techniques, or
 
-    Synthetic data generation that mimics field conditions.
+- Synthetic data generation that mimics field conditions.
 
 ## Model Architecture
 
@@ -233,7 +237,9 @@ history = model.fit(
 )
 ```
 
-## ML Business Case: Mildew Detector
+## ML Business Case
+
+The Mildew Detector
 
 
 ### Objective
@@ -292,6 +298,67 @@ By automating the diagnosis via a mobile app, we can offer:
 
 - Image Count: 4,208 cherry leaf images, 2 classes: Healthy and Powdery Mildew Infected, Format: 128x128 RGB JPEG images
 
+## CRISP-DM Approach
+
+This project follows the CRISP-DM (Cross-Industry Standard Process for Data Mining) methodology to ensure a structured and iterative approach to developing a deep learning model for powdery mildew detection in cherry leaves.
+
+### 1. Business Understanding
+
+- Defined the business objective: automate early detection of diseased leaves to reduce manual inspection overhead.
+
+- Success criteria: high classification accuracy, ease of deployment, and actionable output for end users.
+
+### 2. Data Understanding
+
+- Acquired a labeled image dataset from Farmy & Foods.
+
+- Performed exploratory analysis, image inspection, PCA, t-SNE and UMAP to evaluate class separability and identify potential data quality issues.
+
+### 3. Data Preparation
+
+Preprocessing steps included:
+
+- Resizing, normalization, and data augmentation of training set (e.g., flips, zoom) to enhance generalization.
+
+- Dataset split: 70% train, 15% validation, 15% test, maintaining class balance.
+
+### 4. Modeling
+
+- Implemented a Convolutional Neural Network (CNN) optimized for binary classification using Softmax activation and categorical crossentropy.
+
+- adjusted hyperparameters (e.g., learning rate, batch size, optimizer).
+
+- Monitored performance using validation loss, accuracy, and ROC-AUC.
+
+### 5. Evaluation
+
+Evaluated model on the held-out test set using:
+
+- Classification report (precision, recall, F1-score)
+
+- Confusion matrix and ROC curves
+
+- Met performance benchmarks (≥ 90% test accuracy) defined in the business case.
+
+- Tested for data-leakage
+
+- Tested predictions on real world image examples
+
+### 6. Deployment & Monitoring
+
+- Deployed the model in a Streamlit web app for real-time predictions.
+
+- Integrated automated prediction reports with class probabilities.
+
+- Notebooks can be used as a retraining pipeline for continuous improvement if new data is acquired.
+
+### Conclusion
+
+Following the CRISP-DM process enabled a clear, reproducible path from problem definition to deployment. The result is a scalable, interpretable, and production-ready mildew detection tool tailored for use in precision agriculture.
+
+## Testing
+
+
 
 ## Debugging
 
@@ -300,7 +367,8 @@ By automating the diagnosis via a mobile app, we can offer:
 | Bug | Fix |
 |---|---|
 |**Confusion matrix for model was off compared to performance statistics**|Wrote 'collect predictions functions that stores predictions in a list to avoid errors|
-|**Confusion matrix for model was off compared to performance statistics**|Wrote 'collect predictions functions that stores predictions in a list to avoid errors|
+|**Training the CNN with a softmax output returned an error where it could not process the dataset**|Had to set the class mode of the dataset augmentation to categorical instead of binary|
+|**Code cell could not find test-image folder**| removed hidden space typed in folder name|
 
 ### Unfixed Bugs
 
