@@ -112,8 +112,6 @@ def split_dataset(data_dir, train_ratio, validation_ratio, test_ratio):
 
             shutil.copy2(src, dst)
 
-        # os.rmdir(class_path)
-
 
 def clear_splits(data_dir):
     """

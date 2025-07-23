@@ -27,6 +27,7 @@ interface.
 7. [ML Business case](#ml-business-case)
 8. [Dashboard design](#dashboard-design-streamlit-app-user-interface)
 9. [CRISP DM Process](#the-process-of-cross-industry-standard-process-for-data-mining)
+9. [Testing](#testing)
 10. [Bugs](#bugs)
 11. [Deployment](#deployment)
 12. [Technologies used](#technologies-used)
@@ -232,7 +233,7 @@ history = model.fit(
 )
 ```
 
-## ML Business Case: Powdery Mildew Classifier
+## ML Business Case: Mildew Detector
 
 
 ### Objective
@@ -298,7 +299,8 @@ By automating the diagnosis via a mobile app, we can offer:
 
 | Bug | Fix |
 |---|---|
-|**TypeError: list indices must be integers or slices, not str during CSV Import**|Updated save_cashflow() to detect and handle both single entries and lists|
+|**Confusion matrix for model was off compared to performance statistics**|Wrote 'collect predictions functions that stores predictions in a list to avoid errors|
+|**Confusion matrix for model was off compared to performance statistics**|Wrote 'collect predictions functions that stores predictions in a list to avoid errors|
 
 ### Unfixed Bugs
 
