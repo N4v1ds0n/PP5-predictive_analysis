@@ -15,7 +15,7 @@ app.add_page("Summary", page_summary_body)
 app.add_page("Diagnosis Assistant", page_visual_diagnosis_assistant_body)
 app.add_page("Mildew Detector", page_mildew_detector_body)
 app.add_page("Model Performance Metrics", page_ml_performance_body)
-app.add_page("Working Hypothesis", page_working_hypothesis_body)
+app.add_page("Working Hypotheses", page_working_hypothesis_body)
 
 
 if __name__ == "__main__":

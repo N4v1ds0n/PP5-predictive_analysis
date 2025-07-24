@@ -60,8 +60,8 @@ def page_summary_body():
     st.markdown("""
     This project directly addresses **three key business needs**:
 
-    1️⃣ **Distinguish** between healthy and mildew-infected cherry leaves
-    2️⃣ **Automate** leaf classification using a **deep learning model**
+    1️⃣ **Distinguish** between healthy and mildew-infected cherry leaves\n
+    2️⃣ **Automate** leaf classification using a **deep learning model**\n
     3️⃣ **Provide a clear prediction report** with each model output —
     ensuring transparency, trust, and usability
     """)

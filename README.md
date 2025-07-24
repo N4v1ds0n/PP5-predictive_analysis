@@ -316,7 +316,113 @@ Acceptance Criteria
 
 ## Dashboard Design
 
+### Page 1: Summary
 
+This page conveys a quick overview of the project, what to wexpect on the dashboard. It recaps the business case and the approaches for a solution.
+
+**Page contents:**
+
+- Introduction to the challenge behind the project
+- Sample images from the dataset (one of each class)
+- Business requirements
+- Overview of the dataset and its use in this project
+- Additional ressources
+
+For details take a look at the screenshots below:
+
+<details><summary>Screenshots</summary>
+<img src="assets/features/summary_1.png">
+<img src="assets/features/summary_2.png">
+</details>
+
+### Page 2: Diagnosis Assistant
+
+This page gives a visual itroduction into the data set. It helps to see the differences between classes and understand the implications of the images for a prospective model training.
+
+**Page contents:**
+
+- Average and Variability images of the dataset.
+- Figures demonstrating the differences between images of different classes.
+- The possibility to create an image montage to see a variety of healthy or diseased leaves.
+
+For details take a look at the screenshots below:
+
+<details><summary>Screenshots</summary>
+<img src="assets/features/diag_ass_1.png">
+<img src="assets/features/diag_ass_2.png">
+<img src="assets/features/diag_ass_3.png">
+<img src="assets/features/diag_ass_4.png">
+<img src="assets/features/diag_ass_5.png">
+</details>
+
+### Page 3: Mildew Detector
+
+This page provides a functional tool to upload images and have them tested by the model. It will provide a prediction and classification report, which can be downloaded.
+
+**Page contents:**
+
+- Explanation of tool functionality.
+- Link to set of example images to test the image on.
+- Upload widget.
+- prediction report.
+- download button
+
+For details take a look at the screenshots below:
+
+<details><summary>Screenshots</summary>
+<img src="assets/features/mild_det_1.png">
+<img src="assets/features/mild_det_2.png">
+<img src="assets/features/mild_det_3.png">
+</details>
+
+### Page 4: Model performance Metrics
+
+This page provides the user with a detailed deep dive into the evaluation and the metrics of the model trained for this project.
+
+**Page contents:**
+
+- Dataset Split & Class Distribution
+- Feature Space (PCA)
+- Feature Space (t-SNE)
+- Feature Space (UMAP)
+- Classification Reports
+- Confusion Matrices
+- Model Learning Curves
+- ROC curve
+- Concluding metrics
+
+For details take a look at the screenshots below:
+
+<details><summary>Screenshots</summary>
+<img src="assets/features/perf_metr_1.png">
+<img src="assets/features/perf_metr_2.png">
+<img src="assets/features/perf_metr_3.png">
+<img src="assets/features/perf_metr_4.png">
+<img src="assets/features/perf_metr_5.png">
+<img src="assets/features/perf_metr_6.png">
+<img src="assets/features/perf_metr_7.png">
+<img src="assets/features/perf_metr_8.png">
+</details>
+
+### Page 5: Working Hypotheses
+
+This page gives a detailed view on the working hypotheses that were pursued during this project. Each Hypothesis is stated and validated.
+
+**Page contents:**
+
+- Hypothesis 1
+- Hypothesis 2
+- Hypothesis 3
+- Hypothesis 4
+
+For details take a look at the screenshots below:
+
+<details><summary>Screenshots</summary>
+<img src="assets/features/hypo_1.png">
+<img src="assets/features/hypo_2.png">
+<img src="assets/features/hypo_3.png">
+<img src="assets/features/hypo_4.png">
+</details>
 
 ## CRISP-DM Approach
 
@@ -478,6 +584,80 @@ history = model.fit(
 ```
 
 ## Testing
+
+### Manual testing
+
+#### User Story 1: I as a user want a summary page that provides me with all the information needed to understand the scope of the project and classification model.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+| Summary Page | Dashboard starts with summary page, if not already there, click on sidebar and choose 'Summary Page' | get redirected to Summary page to find all the information you need | Works as expected |
+
+<details><summary>Screenshots</summary>
+<img src="assets/readme_img/testing/summary_1.png">
+<img src="assets/readme_img/features/summary_2.png">
+
+
+### User Story 2: I as a user want to visually differentiate healthy & infected leaves
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+| Diagnosis Assistant | On the dashboard click on sidebar and choose 'Diagnosis Assitant' click through the different radiator button options| Get redirected to the Diagnosis Assistant and browse through the options to receive the information you need | Works as expected |
+
+<details><summary>Screenshots</summary>
+<img src="assets/readme_img/testing/diag_ass_1.png">
+<img src="assets/readme_img/testing/diag_ass_2.png">
+<img src="assets/readme_img/testing/diag_ass_3.png">
+<img src="assets/readme_img/testing/diag_ass_4.png">
+<img src="assets/readme_img/testing/diag_ass_5.png">
+
+
+### User Story 3: I as a user want to use the classification model for AI-powered infection prediction
+
+Acceptance Criteria
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+| Mildew Detector | On the dashboard click on sidebar and choose 'Mildew Detector' drag (an) image(s) from your desktop on the widget, or click the browse button to select it from a directory, receive a prediction report from the model. Click on the button to download your report.| Get redirected to the Mildew Detector upload an image and receive report receive a csv file with report upon downloading it. | Works as expected |
+
+<details><summary>Screenshots</summary>
+<img src="assets/readme_img/testing/mild_det_1.png">
+<img src="assets/readme_img/testing/mild_det_2.png">
+<img src="assets/readme_img/testing/mild_det_3.png">
+
+### User Story 4: I as a user want to know more about the models capabilities and stats.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+| Model Performance Metrics | On the dashboard click on sidebar and choose 'Model Performance Metrics'| Get redirected to the Model Performance Metrics page and find detailed information on the model, its evaluation and metrics | Works as expected |
+
+<details><summary>Screenshots</summary>
+<img src="assets/readme_img/testing/perf_metr_1.png">
+<img src="assets/features/perf_metr_2.png">
+<img src="assets/features/perf_metr_3.png">
+<img src="assets/features/perf_metr_4.png">
+<img src="assets/features/perf_metr_5.png">
+<img src="assets/features/perf_metr_6.png">
+<img src="assets/features/perf_metr_7.png">
+<img src="assets/features/perf_metr_8.png">
+</details>
+
+### User Story 5: I as a user want to learn about the working hypotheses that went into this project and formed the results.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+| Working Hypotheses | On the dashboard click on sidebar and choose 'Working Hypotheses'| Get redirected to the Working Hypotheses page Page and read all about the working hypotheses drafted for this project and the validation process and conlusions. | Works as expected |
+
+<details><summary>Screenshots</summary>
+<img src="assets/readme_img/testing/hypo_1.png">
+<img src="assets/features/hypo_2.png">
+<img src="assets/features/hypo_3.png">
+<img src="assets/features/hypo_4.png">
+</details>
+
+### Validator Testing
+
+PEP8 compliance ensured using flake8 extension for VScode
 
 
 
