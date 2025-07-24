@@ -596,6 +596,7 @@ history = model.fit(
 <details><summary>Screenshots</summary>
 <img src="assets/readme_img/testing/summary_1.png">
 <img src="assets/readme_img/features/summary_2.png">
+</details>
 
 
 ### User Story 2: I as a user want to visually differentiate healthy & infected leaves
@@ -610,6 +611,7 @@ history = model.fit(
 <img src="assets/readme_img/testing/diag_ass_3.png">
 <img src="assets/readme_img/testing/diag_ass_4.png">
 <img src="assets/readme_img/testing/diag_ass_5.png">
+</details>
 
 
 ### User Story 3: I as a user want to use the classification model for AI-powered infection prediction
@@ -624,6 +626,7 @@ Acceptance Criteria
 <img src="assets/readme_img/testing/mild_det_1.png">
 <img src="assets/readme_img/testing/mild_det_2.png">
 <img src="assets/readme_img/testing/mild_det_3.png">
+</details>
 
 ### User Story 4: I as a user want to know more about the models capabilities and stats.
 
