@@ -25,7 +25,7 @@ interface.
 4. [Implementation of Business Requirements](#Implementation-of-Business-Requirements)
 5. [Hypothesis and validation](#hypotheses-and-validation)
 6. [User Stories](#user-stories)
-7. [Dashboard design](#dashboard-design)(#dashboard-design-streamlit-app-user-interface)
+7. [Dashboard design](#dashboard-design)
 8. [CRISP DM](#crisp-dm-approach)
 9. [Model Architecture](#model-architecture)
 10. [Testing](#testing)
@@ -331,8 +331,8 @@ This page conveys a quick overview of the project, what to wexpect on the dashbo
 For details take a look at the screenshots below:
 
 <details><summary>Screenshots</summary>
-<img src="assets/features/summary_1.png">
-<img src="assets/features/summary_2.png">
+<img src="assets/readme_img/features/summary_1.png">
+<img src="assets/readme_img/features/summary_2.png">
 </details>
 
 ### Page 2: Diagnosis Assistant
@@ -348,11 +348,11 @@ This page gives a visual itroduction into the data set. It helps to see the diff
 For details take a look at the screenshots below:
 
 <details><summary>Screenshots</summary>
-<img src="assets/features/diag_ass_1.png">
-<img src="assets/features/diag_ass_2.png">
-<img src="assets/features/diag_ass_3.png">
-<img src="assets/features/diag_ass_4.png">
-<img src="assets/features/diag_ass_5.png">
+<img src="assets/readme_img/features/diag_ass_1.png">
+<img src="assets/readme_img/features/diag_ass_2.png">
+<img src="assets/readme_img/features/diag_ass_3.png">
+<img src="assets/readme_img/features/diag_ass_4.png">
+<img src="assets/readme_img/features/diag_ass_5.png">
 </details>
 
 ### Page 3: Mildew Detector
@@ -370,9 +370,9 @@ This page provides a functional tool to upload images and have them tested by th
 For details take a look at the screenshots below:
 
 <details><summary>Screenshots</summary>
-<img src="assets/features/mild_det_1.png">
-<img src="assets/features/mild_det_2.png">
-<img src="assets/features/mild_det_3.png">
+<img src="assets/readme_img/features/mild_det_1.png">
+<img src="assets/readme_img/features/mild_det_2.png">
+<img src="assets/readme_img/features/mild_det_3.png">
 </details>
 
 ### Page 4: Model performance Metrics
@@ -394,14 +394,14 @@ This page provides the user with a detailed deep dive into the evaluation and th
 For details take a look at the screenshots below:
 
 <details><summary>Screenshots</summary>
-<img src="assets/features/perf_metr_1.png">
-<img src="assets/features/perf_metr_2.png">
-<img src="assets/features/perf_metr_3.png">
-<img src="assets/features/perf_metr_4.png">
-<img src="assets/features/perf_metr_5.png">
-<img src="assets/features/perf_metr_6.png">
-<img src="assets/features/perf_metr_7.png">
-<img src="assets/features/perf_metr_8.png">
+<img src="assets/readme_img/features/perf_metr_1.png">
+<img src="assets/readme_img/features/perf_metr_2.png">
+<img src="assets/readme_img/features/perf_metr_3.png">
+<img src="assets/readme_img/features/perf_metr_4.png">
+<img src="assets/readme_img/features/perf_metr_5.png">
+<img src="assets/readme_img/features/perf_metr_6.png">
+<img src="assets/readme_img/features/perf_metr_7.png">
+<img src="assets/readme_img/features/perf_metr_8.png">
 </details>
 
 ### Page 5: Working Hypotheses
@@ -418,10 +418,10 @@ This page gives a detailed view on the working hypotheses that were pursued duri
 For details take a look at the screenshots below:
 
 <details><summary>Screenshots</summary>
-<img src="assets/features/hypo_1.png">
-<img src="assets/features/hypo_2.png">
-<img src="assets/features/hypo_3.png">
-<img src="assets/features/hypo_4.png">
+<img src="assets/readme_img/features/hypo_1.png">
+<img src="assets/readme_img/features/hypo_2.png">
+<img src="assets/readme_img/features/hypo_3.png">
+<img src="assets/readme_img/features/hypo_4.png">
 </details>
 
 ## CRISP-DM Approach
@@ -636,13 +636,13 @@ Acceptance Criteria
 
 <details><summary>Screenshots</summary>
 <img src="assets/readme_img/testing/perf_metr_1.png">
-<img src="assets/features/perf_metr_2.png">
-<img src="assets/features/perf_metr_3.png">
-<img src="assets/features/perf_metr_4.png">
-<img src="assets/features/perf_metr_5.png">
-<img src="assets/features/perf_metr_6.png">
-<img src="assets/features/perf_metr_7.png">
-<img src="assets/features/perf_metr_8.png">
+<img src="assets/readme_img/features/perf_metr_2.png">
+<img src="assets/readme_img/features/perf_metr_3.png">
+<img src="assets/readme_img/features/perf_metr_4.png">
+<img src="assets/readme_img/features/perf_metr_5.png">
+<img src="assets/readme_img/features/perf_metr_6.png">
+<img src="assets/readme_img/features/perf_metr_7.png">
+<img src="assets/readme_img/features/perf_metr_8.png">
 </details>
 
 ### User Story 5: I as a user want to learn about the working hypotheses that went into this project and formed the results.
@@ -653,9 +653,9 @@ Acceptance Criteria
 
 <details><summary>Screenshots</summary>
 <img src="assets/readme_img/testing/hypo_1.png">
-<img src="assets/features/hypo_2.png">
-<img src="assets/features/hypo_3.png">
-<img src="assets/features/hypo_4.png">
+<img src="assets/readme_img/features/hypo_2.png">
+<img src="assets/readme_img/features/hypo_3.png">
+<img src="assets/readme_img/features/hypo_4.png">
 </details>
 
 ### Validator Testing
@@ -673,6 +673,7 @@ PEP8 compliance ensured using flake8 extension for VScode
 |**Confusion matrix for model was off compared to performance statistics**|Wrote 'collect predictions functions that stores predictions in a list to avoid errors|
 |**Training the CNN with a softmax output returned an error where it could not process the dataset**|Had to set the class mode of the dataset augmentation to categorical instead of binary|
 |**Code cell could not find test-image folder**| removed hidden space typed in folder name|
+|**Screenshots were not showing in the readme**| moving a folder hadchanged the filepath, changing it back solved it|
 
 ### Unfixed Bugs
 
@@ -785,10 +786,16 @@ scikit-learn==...
 
 ## Credits
 
+The Code Institute Walkthrough project one and the Business case were a huge inspiration
 
+[shields.io](https://shields.io/) was used to create the informative badges on top of the readme
+
+I used Copilot for code refactoring, and chatgpt was really helpful creating sample images for model testing.
 
 
 ### Acknowledgements
+
+I would like to thank my wife for keeping me sane and on track and my daughter for leading of track when I needed it!
 
 Thanks to [Code Institute](https://codeinstitute.net/global/), especially Kay Welfare and my mentor Mo Shami. 
 
