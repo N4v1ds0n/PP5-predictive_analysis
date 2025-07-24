@@ -22,7 +22,7 @@ def page_ml_performance_body():
     center_component(lambda: st.image(
         f"outputs/{version}/labels_distribution.png",
         caption="Class Distribution in Train, Validation, and Test Sets",
-        use_column_width=True
+        use_container_width=True
     ))
     center_component(lambda: st.info(
         "- ✅ Balanced distribution reduces model bias."
@@ -144,4 +144,4 @@ def page_ml_performance_body():
         "Model shows excellent generalization, stable training, and reliable predictions. "
         "It is ready for real-world deployment in early mildew detection."
     )
-    st.markdown("📘 See [README](https://github.com/micmic210/mildew-detector/blob/main/README.md) for more.")
+    st.markdown("📘 See [README](https://github.com/N4v1ds0n/PP5-predictive_analysis/blob/main/README.md) for more.")

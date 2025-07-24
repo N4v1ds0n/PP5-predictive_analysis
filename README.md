@@ -20,18 +20,19 @@ interface.
 
 ## Table of Contents
 1. [Dataset Description](#dataset-description)
-2. [Business Requirements](#business-requirements)
-3. [Hypothesis and validation](#hypotheses-and-validation)
-4. [Model Architecture](#model-architecture)
-5. [Implementation of the Business Requirements](#the-rationale-to-map-the-business-requirements-to-the-data-visualizations-and-ml-tasks)
-6. [ML Business case](#ml-business-case)
-7. [Dashboard design](#dashboard-design-streamlit-app-user-interface)
+2. [ML Business case](#ml-business-case)
+3. [Business Requirements](#business-requirements)
+4. [Implementation of Business Requirements](#Implementation-of-Business-Requirements)
+5. [Hypothesis and validation](#hypotheses-and-validation)
+6. [User Stories](#user-stories)
+7. [Dashboard design](#dashboard-design)(#dashboard-design-streamlit-app-user-interface)
 8. [CRISP DM](#crisp-dm-approach)
-9. [Testing](#testing)
-10. [Bugs](#bugs)
-11. [Deployment](#deployment)
-12. [Technologies used](#technologies-used)
-13. [Credits](#credits)
+9. [Model Architecture](#model-architecture)
+10. [Testing](#testing)
+11. [Bugs](#bugs)
+12. [Deployment](#deployment)
+13. [Technologies used](#technologies-used)
+14. [Credits](#credits)
 
 ## Dataset Description
 
@@ -39,6 +40,77 @@ This dataset contains 4,208 high-quality images of individual cherry leaves, eac
 
 All images were captured under consistent, uniform conditions: the leaves are centered against a grey, grainy background, which provides strong visual contrast and supports reliable image analysis.
 The dataset was sourced from [Kaggle](https://www.kaggle.com/datasets/codeinstitute/cherry-leaves).
+---
+
+## ML Business Case
+
+The Mildew Detector
+
+### Problem statement
+
+Farmy & Foods, a major player in the agricultural sector, faces operational challenges in managing powdery mildew across its cherry plantations. The current reliance on manual inspection—taking approximately 30 minutes per tree—is time-intensive and unsustainable at scale. As a result, delayed detection can hinder timely treatment, negatively affecting both yield and crop quality.
+
+
+### Objective
+
+Develop a machine learning model to automatically classify whether a cherry leaf is infected with powdery mildew based on image data provided by the Farmy & Foody company. This is a supervised learning problem, framed as binary image classification. The goal:
+
+- reduce inspection times through automation
+- improve accuracy compared to manual inspection
+- make inspection scaleable for larger areas
+
+### Problem Framing
+
+- Type: Supervised Learning
+
+- Task: Binary classification (Healthy vs. Diseased)
+
+- Label Type: Single-label, mutually exclusive
+
+- Input: RGB image of a cherry leaf
+
+- Output:
+
+    - A binary flag indicating infection status
+
+    - A confidence score (probability between 0–1)
+
+### Success Criteria
+
+- Accuracy target: ≥ 97% on the test set
+
+- Inference mode: Real-time / on-demand
+
+- Deployment target: Mobile/web application for field use by farmers
+
+### Business Rationale
+
+Currently, disease detection relies on manual leaf inspection, where a farmer spends ~30 minutes per tree, sampling and visually inspecting leaves. This process is:
+
+- Time-consuming
+
+- Prone to human error
+
+- Scalable only with increased labor costs
+
+By automating the diagnosis via a mobile app, we can offer:
+
+- Faster diagnosis
+
+- Consistent accuracy
+
+- Reduced labor and inspection costs
+
+- Scalable disease monitoring
+
+### Data Source
+
+- Dataset: Cherry Leaf Disease Dataset on Kaggle
+
+- Provided by: Farmy & Foody
+
+- Image Count: 4,208 cherry leaf images, 2 classes: Healthy and Powdery Mildew Infected, Format: 128x128 RGB JPEG images
+---
 
 ## Business Requirements
 
@@ -55,6 +127,60 @@ Summary of Business Requirements:
 - Automatically predict the health status of a leaf based on an image.
 
 - Provide interpretable prediction reports for the examined leaves.
+
+
+## Implementation of Business Requirements
+
+### Business Requirement 1: Visual Differentiation
+
+Key result:
+Differentiate healthy from diseased leaves through image analysis.
+
+Data processing Tasks:
+
+- Image normalization
+- PCA was used to check feature separability between healthy and infected leaves.
+- Check balancing and verify class distribution to avoid biased learning.
+
+Outcome: Ensured the dataset was visually and statistically robust for effective classification.
+
+
+### Business Requirement 2: Disease Detection & Classification by ML model
+
+Key result:
+Train an ML model capable of classifying cherry leaves as healthy or diseased.
+
+Data preparation and ML training tasks:
+
+- Training set augmentation for model robustnesss.
+- Resizing images for consistency across the set.
+- Model Tuning (Sigmoid or Softmax)
+- Evaluate performance (track accuracy, precision, recall, F1-score, and ROC curves).
+- Check for overfitting by compared training vs. validation vs. test accuracy.
+
+Outcome: Trained an excellingly performing and efficient model based on Softmax that meets the needs of the business requirement.
+
+
+### Business Requirement 3: Model deployment with clear documentation and prediction tool providing a report
+
+
+ML performance visualization Tasks:
+
+
+- Confusion Matrices and other preformance markers visualize performance over all sets
+- Generate prediction reports showing predicted class labels, confidence scores.
+- Deploy streamlit dashboard to provide findings and functionalities.
+
+Outcome: The deployed model provides insights and functionality for users of the dashboard.
+
+
+Conclusion:
+
+Each task perforem in this project was tailored to fulfill part of the business requirements
+- Data processing and visualisation confirmed data quality
+- Augmentation, and preprocessing as well as model selection and evaluation ensure a well trained model.
+- performance evaluation, reporting and interactivity create an insightful and functional deployment.
+
 
 
 ## Hypotheses and Validation
@@ -141,162 +267,52 @@ The model suffers from poor extrapolation due to the highly uniform dataset. For
 
 - Synthetic data generation that mimics field conditions.
 
-## Model Architecture
+## User Stories
 
-### Project Goal  
-This project aims to detect **powdery mildew infections** in cherry leaves using a custom convolutional neural network (CNN). The dataset consists of uniformly captured, centered cherry leaf images, labeled as either *healthy* or *infected*. Given the clearly distinguishable visual cues and the binary nature of the classification task, a CNN is an ideal choice.
+### User Story 1: I as a user want a summary page that provides me with all the information needed to understand the scope of the project and classification model.
 
----
+Acceptance criteria:
 
-### Custom CNN Model Summary
+- Clear statement of the project scope
+- Stating business requirements
+- Overview of dataset 
 
-The model was built using Keras' `Sequential` API and follows a simple yet effective structure:
+### User Story 2: I as a user want to visually differentiate healthy & infected leaves
 
-- **Input**: RGB images resized to `128x128x3`
-- **Convolutional Blocks**: 3 blocks of increasing filters (`32 → 64 → 128`) using `Conv2D` with ReLU and `MaxPooling2D` to downsample
-- **Fully Connected Layer**: A single dense layer with 64 neurons
-- **Regularization**: Dropout of 30% after flattening to reduce overfitting
-- **Output**: 1 neuron with `sigmoid` activation for binary classification
-- **Loss Function**: `binary_crossentropy`
-- **Optimizer**: Adam with learning rate `1e-4`
+Acceptance Criteria
 
-> If the number of classes is changed (e.g., for multiclass disease types), the model automatically switches to a `softmax` output with `categorical_crossentropy`.
+- Display averaged and variability images as well 
+- Display standard deviation image between healthy and diseased leaves.
+- view a montage of healthy or infected leaves for reference
 
-```python
-# Pseudocode overview
-model = build_custom_cnn(
-    shape=(128, 128, 3),
-    num_classes=1,
-    base_filters=32,
-    conv_blocks=3,
-    dense_units=64,
-    dropout_rate=0.3,
-    learning_rate=1e-4
-)
-```
+### User Story 3: I as a user want to use the classification model for AI-powered infection prediction
 
-### ⚙️ Why This Architecture
+Acceptance Criteria
 
+- Detector page with the option to upload my own pictures and predict chance of infection
+- clear statement of my results
+- results downloadable
 
-| Component |	Justification |
-|---|---|
-|Conv2D (3x3 kernels)	| Efficient at capturing local features such as mildew texture and shape.|
-|MaxPooling	| Reduces spatial size and computation, helps with feature generalization. |
-|ReLU activation |	Speeds up convergence and avoids vanishing gradients. |
-|Dropout (0.3)	| Helps regularize the model, important given the relatively small dataset size. |
-|Sigmoid output	| Suitable for binary classification — interprets output as infection probability. |
-|Adam optimizer	| Adaptive and widely used; balances speed and stability.  |
+### User Story 4: I as a user want to know more about the models capabilities and stats.
+
+Acceptance Criteria
+
+- dashboard with model metrics
+- graphs and tables clearly explained
+- summarized for general understanding
+
+### User Story 5: I as a user want to learn about the working hypotheses that went into this project and formed the results.
+
+Acceptance Criteria
+
+    - clear statement of working hypotheses
+    - stating validation methods
+    - stating results
 
 
-### Sigmoid vs. Softmax in Context
-
-There is some debate between using sigmoid vs. softmax in binary classification:
-
-Sigmoid + 1 output node:
-
-- Interprets the output as the probability of being in class 1.
-
-- Works well when classes are mutually exclusive.
-
-- Computationally cheaper and more direct.
-
-Softmax + 2 output nodes:
-
-- Produces a full probability distribution.
-
-- Technically overkill for binary classification but may help in multiclass extensions.
-
-- Some argue it performs better in gradient-based optimization.
-
-In this project, we use sigmoid, treating the task as binary classification with binary_crossentropy loss, which is appropriate and efficient.
-
-### Training Configuration
-
-    Epochs: 25 (with early stopping)
-
-    Callbacks:
-
-        EarlyStopping to prevent overfitting
-
-        ModelCheckpoint to save the best model
-
-    Metrics Tracked: Accuracy, validation loss
-
-```python
-callbacks = [
-    EarlyStopping(patience=5, restore_best_weights=True),
-    ModelCheckpoint('path/to/save/mildew_detector.h5', save_best_only=True)
-]
-
-history = model.fit(
-    train_set,
-    validation_data=validation_set,
-    epochs=25,
-    callbacks=callbacks,
-    verbose=1
-)
-```
-
-## ML Business Case
-
-The Mildew Detector
+## Dashboard Design
 
 
-### Objective
-
-Develop a machine learning model to automatically classify whether a cherry leaf is infected with powdery mildew based on image data provided by the Farmy & Foody company. This is a supervised learning problem, framed as binary image classification.
-
-### Problem Framing
-
-- Type: Supervised Learning
-
-- Task: Binary classification (Healthy vs. Diseased)
-
-- Label Type: Single-label, mutually exclusive
-
-- Input: RGB image of a cherry leaf
-
-- Output:
-
-    - A binary flag indicating infection status
-
-    - A confidence score (probability between 0–1)
-
-### Success Criteria
-
-- Accuracy target: ≥ 87% on the test set
-
-- Inference mode: Real-time / on-demand (no batch inference)
-
-- Deployment target: Mobile/web application for field use by farmers
-
-### Business Rationale
-
-Currently, disease detection relies on manual leaf inspection, where a farmer spends ~30 minutes per tree, sampling and visually inspecting leaves. This process is:
-
-- Time-consuming
-
-- Prone to human error
-
-- Scalable only with increased labor costs
-
-By automating the diagnosis via a mobile app, we can offer:
-
-- Faster diagnosis
-
-- Consistent accuracy
-
-- Reduced labor and inspection costs
-
-- Scalable disease monitoring
-
-### Data Source
-
-- Dataset: Cherry Leaf Disease Dataset on Kaggle
-
-- Provided by: Farmy & Foody
-
-- Image Count: 4,208 cherry leaf images, 2 classes: Healthy and Powdery Mildew Infected, Format: 128x128 RGB JPEG images
 
 ## CRISP-DM Approach
 
@@ -355,6 +371,107 @@ Evaluated model on the held-out test set using:
 ### Conclusion
 
 Following the CRISP-DM process enabled a clear, reproducible path from problem definition to deployment. The result is a scalable, interpretable, and production-ready mildew detection tool tailored for use in precision agriculture.
+
+
+## Model Architecture
+
+### Project Goal  
+This project aims to detect **powdery mildew infections** in cherry leaves using an ML model. The dataset consists of uniformly captured, centered cherry leaf images, labeled as either *healthy* or *infected*. Given the clearly distinguishable visual cues that can also be grouped in tests such as PCA, t-SNE and UMAP a CNN is an ideal choice.
+
+---
+
+### Custom CNN Model Summary
+
+To keep all options in the field of CNNs open a custom function for model creation was drafted which can be adjusted to fit binary and multiclass models.
+
+The model was built using Keras' `Sequential` API and follows a simple yet effective structure:
+
+- **Input**: RGB images resized to `128x128x3`
+- **Convolutional Blocks**: 3 blocks of increasing filters (`32 → 64 → 128`) using `Conv2D` with ReLU and `MaxPooling2D` to downsample
+- **Fully Connected Layer**: A single dense layer with 64 neurons
+- **Regularization**: Dropout of 30% after flattening to reduce overfitting
+- **Output**: 1 neuron with `sigmoid` activation for binary classification
+- **Loss Function**: `binary_crossentropy`
+- **Optimizer**: Adam with learning rate `1e-4`
+
+> If the number of classes is changed (e.g., for multiclass disease types), the model automatically switches to a `softmax` output with `categorical_crossentropy`.
+
+```python
+# Pseudocode overview
+model = build_custom_cnn(
+    shape=(128, 128, 3),
+    num_classes=1,
+    base_filters=32,
+    conv_blocks=3,
+    dense_units=64,
+    dropout_rate=0.3,
+    learning_rate=1e-4
+)
+```
+
+### ⚙️ Why This Architecture
+
+
+| Component |	Justification |
+|---|---|
+|Conv2D (3x3 kernels)	| Efficient at capturing local features such as mildew texture and shape.|
+|MaxPooling	| Reduces spatial size and computation, helps with feature generalization. |
+|ReLU activation |	Speeds up convergence and avoids vanishing gradients. |
+|Dropout (0.3)	| Helps regularize the model, important given the relatively small dataset size. |
+|Sigmoid output	| Suitable for binary classification — interprets output as infection probability. |
+or 
+|Softmax output | Also suitable for binary classification if properly adjusted, can produce higher accuracy|
+|Adam optimizer	| Adaptive and widely used; balances speed and stability.  |
+
+
+### Sigmoid vs. Softmax in Context
+
+There is some debate between using sigmoid vs. softmax in binary classification:
+
+Sigmoid + 1 output node:
+
+- Interprets the output as the probability of being in class 1.
+
+- Works well when classes are mutually exclusive.
+
+- Computationally cheaper and more direct.
+
+Softmax + 2 output nodes:
+
+- Produces a full probability distribution.
+
+- Can be a technical overkill for binary classification but may help in gradient based classification.
+
+- Arguably performs better in gradient-based optimization.
+
+In this project, we use softmax, treating the task as categorical classification with categorical_crossentropy loss, which yields better accuracy and despite higher technical complexity trains faster.
+
+### Training Configuration
+
+    Epochs: 25 (with early stopping)
+
+    Callbacks:
+
+        EarlyStopping to prevent overfitting
+
+        ModelCheckpoint to save the best model
+
+    Metrics Tracked: Accuracy, validation loss
+
+```python
+callbacks = [
+    EarlyStopping(patience=5, restore_best_weights=True),
+    ModelCheckpoint('path/to/save/mildew_detector.h5', save_best_only=True)
+]
+
+history = model.fit(
+    train_set,
+    validation_data=validation_set,
+    epochs=25,
+    callbacks=callbacks,
+    verbose=1
+)
+```
 
 ## Testing
 
