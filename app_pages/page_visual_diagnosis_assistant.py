@@ -9,7 +9,7 @@ from src.dashboard.vda_utils import (
 
 def page_visual_diagnosis_assistant_body():
     """
-    Streamlit UI for visualizing 
+    Streamlit UI for visualizing
     healthy vs. mildew-infected cherry leaves.
     """
 
@@ -26,6 +26,3 @@ def page_visual_diagnosis_assistant_body():
     show_average_images(output_dir)
     show_difference_image(output_dir)
     show_image_montage(data_dir)
-
-
-

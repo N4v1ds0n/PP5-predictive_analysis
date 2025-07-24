@@ -33,7 +33,8 @@ def plot_predictions_probabilities(pred_proba, pred_class, chart_key=None):
         template='seaborn'
     )
 
-    st.plotly_chart(fig, key=chart_key or f"chart_{np.random.randint(1_000_000)}")
+    st.plotly_chart(fig,
+                    key=chart_key or f"chart_{np.random.randint(1_000_000)}")
 
 
 def resize_input_image(img, version):
@@ -63,17 +64,20 @@ def load_model_and_predict(my_image, version):
 
     pred_proba = model.predict(my_image)[0, 0]
 
-    target_map = {v: k for k, v in {'diseased': 0, 'healthy': 1}.items()}
+    target_map = {v: k for k, v in {'diseased': 1, 'healthy': 0}.items()}
     pred_class = target_map[pred_proba > 0.5]
     if pred_class == target_map[0]:
         pred_proba = 1 - pred_proba
 
     st.write(
         f"The predictive analysis indicates the sample leaf is "
-        f"**{pred_class.lower()}** with a probability of **{pred_proba:.2%}**.")
+        f"**{pred_class.lower()}** with probability: **{pred_proba:.2%}**.")
 
     return pred_proba, pred_class
 
 
 def load_test_evaluation(version):
+    """
+    Load test evaluation metrics from a pickle file.
+    """
     return load_pkl_file(f'outputs/{version}/eval.pkl')

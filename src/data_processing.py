@@ -5,6 +5,9 @@ import random
 
 
 def remove_non_image_files(data_dir):
+    """
+    Remove non-image files from the dataset directory.
+    """
     image_extensions = ('.png', '.jpg', '.jpeg')
 
     for folder_name in os.listdir(data_dir):

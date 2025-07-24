@@ -16,8 +16,9 @@ def show_average_images(output_dir: Path):
 
         if avg_healthy.exists() and avg_infected.exists():
             st.warning(
-                "⚠️ While not visually obvious, infected leaves show more "
-                "**white streaks at the center**, suggesting possible textural cues."
+                "⚠️ Infected leaves show more **textural noise** and "
+                "**white streaks at the center**, suggesting possible "
+                "textural clues."
             )
 
             st.image(
@@ -42,12 +43,15 @@ def show_difference_image(output_dir: Path):
 
         if diff_img_path.exists():
             st.warning(
-                "⚠️ The difference image reveals subtle variations, but not strong "
-                "visual features. Further automated feature extraction may help."
+                "⚠️ The difference image reveals subtle but clear "
+                "variations, but not obvious to the naked eye. "
+                "Further automated feature extraction may help."
             )
-            st.image(str(diff_img_path), caption="Difference Between Average Images")
+            st.image(str(diff_img_path),
+                     caption="Difference Between Average Images")
         else:
-            st.error("Difference image not found. Please generate it during preprocessing.")
+            st.error("Difference image not found."
+                     "Please generate it during preprocessing.")
 
         st.markdown("---")
 
@@ -56,17 +60,20 @@ def show_image_montage(data_dir: Path):
     """Displays a montage of sample images from the validation set."""
 
     if st.checkbox("Image Montage"):
-        st.write("🖼️ Click 'Create Montage' to refresh with new random images.")
+        st.write("Click 'Create Montage' to show a montage of random images.\n"
+                 "\nSelect 'healthy' or 'diseased' to filter images.")
+
         if not data_dir.exists():
             st.error(f"Validation directory not found: {data_dir}")
             return
 
-        class_labels = sorted([f.name for f in data_dir.iterdir() if f.is_dir()])
-        if not class_labels:
+        class_lbls = sorted([f.name for f in data_dir.iterdir() if f.is_dir()])
+        if not class_lbls:
             st.error("No class subdirectories found in validation set.")
             return
 
-        label_to_display = st.selectbox("Select Class Label", options=class_labels)
+        label_to_display = st.selectbox("Select Class Label",
+                                        options=class_lbls)
 
         if st.button("Create Montage"):
             image_montage(
@@ -80,8 +87,11 @@ def show_image_montage(data_dir: Path):
         st.markdown("---")
 
 
-def image_montage(dir_path: Path, label_to_display: str, nrows: int, ncols: int, figsize=(10, 10)):
-    """Generates and displays a montage of random images from a selected class."""
+def image_montage(dir_path: Path, label_to_display: str,
+                  nrows: int, ncols: int, figsize=(10, 10)):
+    """
+    Generates and displays a montage of random images from a selected class.
+    """
     sns.set_style("white")
 
     class_dir = dir_path / label_to_display
@@ -95,8 +105,9 @@ def image_montage(dir_path: Path, label_to_display: str, nrows: int, ncols: int,
 
     if total_images < required_images:
         st.warning(
-            f"Only {total_images} images found, but {required_images} requested."
-            )
+            f"Only {total_images} images found,"
+            f" but {required_images} requested."
+        )
         return
 
     selected_images = random.sample(images_list, required_images)

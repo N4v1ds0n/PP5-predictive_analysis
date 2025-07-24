@@ -13,8 +13,6 @@ from tensorflow.keras.layers import (
 from tensorflow.keras.optimizers import Adam
 from sklearn.model_selection import KFold
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras import models
-from tensorflow.keras import layers
 from sklearn.metrics import roc_curve, auc
 
 
@@ -109,6 +107,9 @@ def build_custom_cnn(
     dropout_rate=0.3,
     learning_rate=1e-4
 ):
+    """
+    Build a custom CNN model with specified architecture parameters.
+    """
     model = Sequential()
     model.add(InputLayer(shape=shape))
 
@@ -148,9 +149,9 @@ def plot_training_curves(history,
     Plots loss and accuracy curves from model training history.
 
     Parameters:
-        history (tensorflow.keras.callbacks.History or dict): History object or dict
-        with 'loss', 'val_loss', etc. output_dir (str, optional): Path to
-        save figures. If None and save_figures=True, saves to current
+        history (tensorflow.keras.callbacks.History or dict): History object
+        or dict with 'loss', 'val_loss', etc. output_dir (str, optional): Path
+        to save figures. If None and save_figures=True, saves to current
         directory.
         save_figures (bool): Whether to save plots as image files.
         dpi (int): Resolution of saved figures.
@@ -193,10 +194,12 @@ def plot_training_curves(history,
 
 
 def collect_predictions(generator, model):
+    """
+    Collect predictions from a generator using the provided model.
+    """
     x_data = []
     y_true = []
     y_probs = []
-
 
     for i in range(len(generator)):
         x_batch, y_batch = generator[i]
@@ -207,7 +210,8 @@ def collect_predictions(generator, model):
         # Binary classification (sigmoid) → shape: (batch_size, 1)
         if probs.shape[-1] == 1:
             probs = probs.ravel()
-        # Categorical classification (softmax) → shape: (batch_size, num_classes)
+        # Categorical classification (softmax) →
+        # shape: (batch_size, num_classes)
         # keep as-is
 
         y_probs.extend(probs)
@@ -216,12 +220,16 @@ def collect_predictions(generator, model):
 
 
 def preprocess_labels_and_probs(y_true, y_probs, is_binary):
+    """
+    Preprocess labels and probabilities for ROC curve plotting.
+    Handles both binary and multiclass cases.
+    """
     if not is_binary:
         # Handle softmax output
         if y_probs.ndim == 2 and y_probs.shape[1] > 1:
             y_probs = y_probs[:, 1]  # Prob of class 1
         else:
-            raise ValueError("Expected softmax probs with shape (N, num_classes)")
+            raise ValueError("Expected softmax with shape (N, num_classes)")
 
         if y_true.ndim == 2 and y_true.shape[1] > 1:
             y_true = np.argmax(y_true, axis=1)
@@ -229,7 +237,7 @@ def preprocess_labels_and_probs(y_true, y_probs, is_binary):
             # Already class indices
             pass
         else:
-            raise ValueError("Unexpected shape for y_true in multiclass classification")
+            raise ValueError("Unexpected y_true-shape in multiclass classif.")
     else:
         y_probs = y_probs.ravel()
         y_true = y_true.astype(int).ravel()
@@ -241,14 +249,19 @@ def plot_roc(y_true_train, y_probs_train,
              y_true_val, y_probs_val,
              y_true_test, y_probs_test,
              is_binary, output_dir):
-    
-    from sklearn.metrics import roc_curve, auc
-    import matplotlib.pyplot as plt
-    import os
+    """
+    Plot ROC curves for train, validation, and test sets.
+    """
 
-    y_true_train, y_probs_train = preprocess_labels_and_probs(y_true_train, y_probs_train, is_binary)
-    y_true_val, y_probs_val = preprocess_labels_and_probs(y_true_val, y_probs_val, is_binary)
-    y_true_test, y_probs_test = preprocess_labels_and_probs(y_true_test, y_probs_test, is_binary)
+    y_true_train, y_probs_train = preprocess_labels_and_probs(y_true_train,
+                                                              y_probs_train,
+                                                              is_binary)
+    y_true_val, y_probs_val = preprocess_labels_and_probs(y_true_val,
+                                                          y_probs_val,
+                                                          is_binary)
+    y_true_test, y_probs_test = preprocess_labels_and_probs(y_true_test,
+                                                            y_probs_test,
+                                                            is_binary)
 
     fpr_train, tpr_train, _ = roc_curve(y_true_train, y_probs_train)
     fpr_val, tpr_val, _ = roc_curve(y_true_val, y_probs_val)
@@ -259,10 +272,14 @@ def plot_roc(y_true_train, y_probs_train,
     auc_test = auc(fpr_test, tpr_test)
 
     plt.figure(figsize=(8, 6))
-    plt.plot(fpr_train, tpr_train, label=f"Train AUC = {auc_train:.2f}", color="blue")
-    plt.plot(fpr_val, tpr_val, label=f"Validation AUC = {auc_val:.2f}", color="orange")
-    plt.plot(fpr_test, tpr_test, label=f"Test AUC = {auc_test:.2f}", color="green")
-    plt.plot([0, 1], [0, 1], linestyle="--", color="gray", label="Random (0.5)")
+    plt.plot(fpr_train, tpr_train, label=f"Train AUC = {auc_train:.2f}",
+             color="blue")
+    plt.plot(fpr_val, tpr_val, label=f"Validation AUC = {auc_val:.2f}",
+             color="orange")
+    plt.plot(fpr_test, tpr_test, label=f"Test AUC = {auc_test:.2f}",
+             color="green")
+    plt.plot([0, 1], [0, 1], linestyle="--", color="gray",
+             label="Random (0.5)")
     plt.title("ROC Curve")
     plt.xlabel("False Positive Rate")
     plt.ylabel("True Positive Rate")
@@ -295,8 +312,12 @@ def create_dataframe_from_folders(data_dir):
     return pd.DataFrame({'filename': filepaths, 'class': labels})
 
 
-def run_kfold(data_dir, k=5, image_size=(128, 128), batch_size=32, epochs=10, mode='softmax'):
-    assert mode in ['sigmoid', 'softmax'], "Mode must be 'sigmoid' or 'softmax'"
+def run_kfold(data_dir, k=5, image_size=(128, 128),
+              batch_size=32, epochs=10, mode='softmax'):
+    """
+    Run K-Fold cross-validation on a dataset.
+    """
+    assert mode in ['sigmoid', 'softmax'], "Mode must be sigmoid or softmax"
 
     df = create_dataframe_from_folders(data_dir)
     df = df[df['class'].isin(['diseased', 'healthy'])]
@@ -344,17 +365,18 @@ def run_kfold(data_dir, k=5, image_size=(128, 128), batch_size=32, epochs=10, mo
             shuffle=False
         )
 
-        model = build_custom_cnn(shape=(*image_size, 3), num_classes=num_classes)
+        model = build_custom_cnn(shape=(*image_size, 3),
+                                 num_classes=num_classes)
 
         start_time = time.time()
-        
+
         history = model.fit(
             train_gen,
             validation_data=val_gen,
             epochs=epochs,
             verbose=1
         )
-        
+
         end_time = time.time()
         elapsed = end_time - start_time
         training_times.append(elapsed)
@@ -372,9 +394,11 @@ def run_kfold(data_dir, k=5, image_size=(128, 128), batch_size=32, epochs=10, mo
 
     print("\n📊 K-Fold Results:")
     for result in fold_results:
-        print(f"Fold {result['fold']}: Val Acc = {result['val_acc']:.4f}, Val Loss = {result['val_loss']:.4f}, Train Time = {result['train_time_sec']:.2f}s")
-        
+        print(f"Fold {result['fold']}: Val Acc = {result['val_acc']:.4f}, "
+              f"Val Loss = {result['val_loss']:.4f}, "
+              f"Train Time = {result['train_time_sec']:.2f}s")
+
     accs = [r["val_acc"] for r in fold_results]
     print(f"\nAverage Accuracy: {np.mean(accs):.4f} ± {np.std(accs):.4f}")
-    print(f"⏱️ Average Training Time per Fold: {np.mean(training_times):.2f} seconds")
-    print(f"🕒 Total Training Time: {np.sum(training_times):.2f} seconds")
+    print(f"⏱️ Average Training Time per Fold: {np.mean(training_times):.2f}s")
+    print(f"🕒 Total Training Time: {np.sum(training_times):.2f}s")

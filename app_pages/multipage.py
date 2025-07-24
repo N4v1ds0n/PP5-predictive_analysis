@@ -30,7 +30,9 @@ class MultiPage:
                     title for title in page_titles
                     if normalize(title) == query_params["page"]
                 ]
-                st.session_state.selected_page = matched[0] if matched else page_titles[0]
+                st.session_state.selected_page = (
+                    matched[0] if matched else page_titles[0]
+                )
             else:
                 st.session_state.selected_page = page_titles[0]
 
