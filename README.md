@@ -709,8 +709,10 @@ PEP8 compliance ensured using flake8 extension for VScode
 
 | Bug | Fix |
 |---|---|
+| **Calling functions from scripts in the jupyter notebooks proved difficult because of file path errors** | Added the origin path using "sys.path.append('../src')" to avoid confusion in the future |
 |**Confusion matrix for model was off compared to performance statistics**|Wrote 'collect predictions functions that stores predictions in a list to avoid errors|
 |**Training the CNN with a softmax output returned an error where it could not process the dataset**|Had to set the class mode of the dataset augmentation to categorical instead of binary|
+|**umap-learn module was creating errors with latest scikit-learn distro**|Had to downgrade scikitlearn to version 1.3.1 regain compatibility |
 |**Code cell could not find test-image folder**| removed hidden space typed in folder name|
 |**Screenshots were not showing in the readme**| moving a folder hadchanged the filepath, changing it back solved it|
 
