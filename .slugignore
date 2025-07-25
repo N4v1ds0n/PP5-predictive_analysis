@@ -4,11 +4,14 @@ inputs/datasets/raw/cherry-leaves/test/healthy*
 inputs/datasets/raw/cherry-leaves/test/diseased*
 inputs/datasets/raw/cherry-leaves/train/healthy*
 inputs/datasets/raw/cherry-leaves/train/diseased*
+inputs/datasets/test_images*
 .devcontainer/
 assets/*
+requirements-dev.txt
 README.md
 __pycache__/
 src/__pycache__/
 src/dashboard/__pycache__/
 app_pages/__pycache__/
 venv/
+tests/*

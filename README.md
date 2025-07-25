@@ -658,6 +658,45 @@ Acceptance Criteria
 <img src="assets/readme_img/features/hypo_4.png">
 </details>
 
+### Automated Testing
+
+Automated testing was implemented for some of the principal python scripts picked from each domain. The app.py script as a central app building block, the multipage.py script as the back bone of the streamlit pages and the data_processing.py script as an example from the src files were tested with automated tests.
+
+All tests ran smoothly, in the future more tests will be added to cover all scripts in the repo.
+
+#### Test Results:
+
+PP5-predictive_analysis> pytest tests/test_app.py
+=========================================================================== test session starts =========================================================================== 
+platform win32 -- Python 3.9.13, pytest-8.4.1, pluggy-1.6.0
+collected 1 item                                                                                                                                                            
+
+tests\test_app.py .                                                                                                                                                  [100%] 
+
+============================================================================ 1 passed in 8.76s ============================================================================ 
+PP5-predictive_analysis> pytest tests/test_data_processing.py
+=========================================================================== test session starts =========================================================================== 
+platform win32 -- Python 3.9.13, pytest-8.4.1, pluggy-1.6.0
+rootdir: PP5-predictive_analysis
+collected 5 items
+
+tests\test_data_processing.py .....                                                                                                                                  [100%] 
+
+============================================================================ 5 passed in 0.38s ============================================================================ 
+PP5-predictive_analysis> pytest tests/test_multipage.py
+=========================================================================== test session starts =========================================================================== 
+platform win32 -- Python 3.9.13, pytest-8.4.1, pluggy-1.6.0
+rootdir: PP5-predictive_analysis
+collected 3 items
+
+tests\test_multipage.py ...                                                                                                                                          [100%] 
+
+============================================================================ 3 passed in 1.67s ============================================================================ 
+
+#### Note:
+
+Ast the testing is not art of the deployment, the pytest package is also part of the requirements-dev.txt requirements file, as it should only be installed locally.
+
 ### Validator Testing
 
 PEP8 compliance ensured using flake8 extension for VScode
@@ -781,7 +820,7 @@ Pillow==10.0.1
 streamlit==1.40.2
 joblib==1.4.2
 tensorflow-cpu==2.16.1
-scikit-learn==...
+scikit-learn==1.3.1
 </pre>
 
 ## Credits
