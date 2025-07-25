@@ -12,13 +12,16 @@ from src.dashboard.model_reference import (load_model_and_predict,
 
 def page_mildew_detector_body():
     st.info(
-        "* The client is interested in telling whether a sampled cherry leaf "
-        "is affected by a mildew infection "
-        "or not."
+        """
+        Using the mildew detector, you can upload your own sample images
+        and have the model predict if the leaves are healthy or diseased with
+        mildew. You can also download the results as a report.
+        Just upload your images and try it!
+        """
         )
 
     st.write(
-        "* I have provided a set of sample test images in the inputs folder "
+        "* We have provided a set of sample test images. "
         "You can download the images from [here](https://github.com/N4v1ds0n"
         "/PP5-predictive_analysis/tree/main/inputs/datasets/test_images)."
         )
