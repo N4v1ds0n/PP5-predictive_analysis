@@ -23,15 +23,15 @@ interface.
 2. [ML Business case](#ml-business-case)
 3. [Business Requirements](#business-requirements)
 4. [Implementation of Business Requirements](#Implementation-of-Business-Requirements)
-5. [Hypothesis and validation](#hypotheses-and-validation)
+5. [Hypotheses and validation](#hypotheses-and-validation)
 6. [User Stories](#user-stories)
 7. [Dashboard design](#dashboard-design)
 8. [CRISP DM](#crisp-dm-approach)
 9. [Model Architecture](#model-architecture)
 10. [Testing](#testing)
-11. [Bugs](#bugs)
+11. [Debugging](#debugging)
 12. [Deployment](#deployment)
-13. [Technologies used](#technologies-used)
+13. [Technologies](#technologies)
 14. [Credits](#credits)
 
 ## Dataset Description
@@ -797,7 +797,7 @@ If you want to work on your fork locally, you can clone the project to your mach
 
 ---
 
-## Technologies used
+## Technologies
 
 ### Platforms
 - [Heroku](https://en.wikipedia.org/wiki/Heroku) Deployment
